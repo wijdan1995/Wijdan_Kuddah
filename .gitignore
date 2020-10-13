@@ -102,3 +102,11 @@ dist
 
 # TernJS port file
 .tern-port
+
+# ignores any file with a .zip extension
+*.zip
+
+# ignores any directory named "secrets"
+test/
+
+.DS_Store
