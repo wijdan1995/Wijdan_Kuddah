@@ -4,7 +4,10 @@
 }
 body {
   background-color: #f7f7f7;
+  width: 980px;
+  margin: 0 auto;
 }
+
 header {
   display: flex;
   justify-content: space-between;
