@@ -1,0 +1,29 @@
+body {
+    background-color: #cfcba7;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+}
+
+header img{
+    height: 50px;
+}
+
+main div{
+    display: flex;
+    justify-content: center;
+}
+main img{
+    border: 5px solid black;
+    padding: 15px;
+    margin: 5px;
+    width: 10%;
+    background-color: #77ade8;
+}
+
+main img:nth-of-type(2n){
+    background-color: #f05d66;
+}
