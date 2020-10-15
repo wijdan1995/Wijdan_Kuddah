@@ -46,6 +46,7 @@ minOfSortedRotated = (arr) =>{
         // if any value less than min it will be the new min
         if(min > arr[i]) {
             min = arr[i];
+            break;
         } 
     } 
     // if not the first value is the min

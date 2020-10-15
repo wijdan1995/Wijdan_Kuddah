@@ -108,5 +108,6 @@ dist
 
 # ignores any directory named "secrets"
 test/
-
+exam/
+.vscode
 .DS_Store
