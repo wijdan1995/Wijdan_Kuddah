@@ -1,0 +1,12 @@
+body {
+  padding: 20px;
+  margin: 20px;
+}
+div{
+  display: flex;
+  flex-wrap: wrap;
+}
+img{
+  margin: 5px;
+  width: 20% !important;
+}
