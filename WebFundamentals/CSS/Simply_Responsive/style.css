@@ -1,0 +1,65 @@
+.header {
+    background-color: #aaaaaa;
+    border: 1px solid #d1c293;
+    margin: 10px;
+    padding: 10px;
+}
+
+
+.content {
+    border: 1px solid #d1c293;
+    background-color: #c5c5c5;
+    margin: 10px;
+    padding: 10px;
+}
+
+.responsive {
+    border: 1px solid #d1c293;
+    background-color: #fffe97;
+    margin: 10px;
+    padding: 10px;
+}
+
+span {
+    font-weight: 800;
+}
+
+/* Small screens (phone) */
+@media only screen and (max-width: 480px){
+    .sm  {
+        display: block;
+    }
+    .md {
+        display: none;
+    }
+
+    .lg {
+        display: none;
+    }
+}
+
+/* Medium screens (tablet) */
+@media only screen and (min-width: 481px){
+    .sm  {
+        display: none;
+    }
+    .md {
+        display: block;
+    } 
+    .lg {
+        display: none;
+    }
+}
+
+/* Large screens (desktop) */
+@media only screen and (min-width: 1024px){
+    .sm {
+        display: none;
+    }
+    .md {
+        display: none;
+    }
+    .lg {
+        display: block;
+    }
+}

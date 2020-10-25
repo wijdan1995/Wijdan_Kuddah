@@ -62,13 +62,14 @@ secondLargest = (arr) => {
 doubleTrouble = (arr) => {
     let newArr =[]
     for(let i =0; i < arr.length; i++){
-        for(let j = 0; j < 2; j++){
-            newArr.push(arr[i]) 
-        }
+        // for(let j = 0; j < 2; j++){
+            newArr.push(arr[i], arr[i]) 
+            // newArr.push(arr[i]) 
+        // }
         
     }
     return newArr
 }
-// console.log(doubleTrouble( [4, "Ulysses", 42, false]))
+console.log(doubleTrouble( [4, "Ulysses", 42, false]))
 
 

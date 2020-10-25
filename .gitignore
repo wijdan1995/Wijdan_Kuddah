@@ -111,3 +111,4 @@ test/
 exam/
 .vscode
 .DS_Store
+my_environments/
