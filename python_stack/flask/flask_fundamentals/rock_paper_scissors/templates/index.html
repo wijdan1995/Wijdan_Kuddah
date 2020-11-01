@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Rock Paper Scissors</title>
+    <style>
+        img{
+            width: 655px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="mt-5" src="{{ url_for('static', filename='RockPaperScissors.png') }}" alt="img">
+        <div class="mt-4">
+            <form action="/play" method='post' class="form-group d-flex justify-content-center align-items-center">
+                <input type="hidden" name="which_form" value="game">
+                <label for="choices" class="mr-2">Pick one:</label>
+                <select id="choices" name="choise" class="form-control col-4 mr-2">
+                    <option value="rock">Rock</option>
+                    <option value="paper">Paper</option>
+                    <option value="scissors">Scissors</option>
+                </select>
+                <button type="submit" class="btn btn-dark">Go</button>
+            </form>
+        </div>
+        {% with messages = get_flashed_messages() %}
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        </div>
+        {% endwith %}
+        {% if session%}
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Wins</th>
+                            <th scope="col">Losses</th>
+                            <th scope="col">Ties</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{session['win']}}</td>
+                            <td>{{session['lose']}}</td>
+                            <td>{{session['tie']}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <form action="/play" method='post' class="form-group d-flex justify-content-center align-items-center">
+                    <input type="hidden" name="which_form" value="reset">
+                    <button type="submit" class="btn btn-outline-dark btn-sm">Reset</button>
+                </form>
+            </div>
+        {% endif %}
+        
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
