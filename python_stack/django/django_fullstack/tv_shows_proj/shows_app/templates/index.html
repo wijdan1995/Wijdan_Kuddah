@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>TV Shows | Read All</title>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class=" mt-5">
+            <h2 class="text-center">All Shows</h2>
+            <table class="table ">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Release Date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for show in all_shows %}
+                    <tr>
+                        <td><a href="/shows/{{show.id}}">{{show.id}}</a></td>
+                        <td>{{show.title}}</td>
+                        <td>{{show.release_date|date:'b d, Y' }}</td>
+                        <td><a href="/shows/{{show.id}}">Show</a> | <a href="/shows/{{show.id}}/edit">Edit</a> | <a
+                                href="/shows/{{show.id}}/destroy" data-toggle="modal"
+                                data-target="#deleteModal">Delete</a></td>
+                    </tr>
+                    <!-- Modal -->
+                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel">Are you sure ?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No Close</button>
+                                    <a class="btn btn-primary" href="/shows/{{show.id}}/destroy">Yes Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="shows/new"><button class="btn btn-dark">Add a New Show</button></a>
+
+        
+    </div>
+    </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

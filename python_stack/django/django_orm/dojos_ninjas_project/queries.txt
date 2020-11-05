@@ -1,0 +1,41 @@
+from dojos_ninjas.models import Dojo, Ninja
+Dojo.objects.all()
+1- Query: Create 3 new dojos
+    Dojo.objects.create(name="Web dev", city="KSA", state="sa")
+    Dojo.objects.create(name="app dev", city="USA", state="us")
+    Dojo.objects.create(name="Java dev", city="US", state="us")
+
+2- Query: Delete the 3 dojos you just created
+    Dojo.objects.all().delete()
+
+3- Query: Create 3 more dojos
+    Dojo.objects.create(name="Web dev", city="KSA", state="sa")
+    Dojo.objects.create(name="app dev", city="USA", state="us")
+    Dojo.objects.create(name="Java dev", city="US", state="us")
+
+4- Query: Create 3 ninjas that belong to the first dojo
+    Ninja.objects.create(first_name="Fatima", last_name="Abdullah", state="sa",dojo = Dojo.objects.get(id=1))
+    Ninja.objects.create(first_name="Wijdan", last_name="Kuddah", state="sa",dojo = Dojo.objects.get(id=1))
+    Ninja.objects.create(first_name="phil", last_name="kurll", state="sa",dojo = Dojo.objects.get(id=1))
+
+5- Query: Create 3 ninjas that belong to the second dojo
+    Ninja.objects.create(first_name="may", last_name="waleed", state="sa",dojo = Dojo.objects.get(id=2))
+    Ninja.objects.create(first_name="lolo", last_name="waleed", state="sa",dojo = Dojo.objects.get(id=2))
+    Ninja.objects.create(first_name="jojo", last_name="waleed", state="sa",dojo = Dojo.objects.get(id=2))
+
+6- Query: Create 3 ninjas that belong to the third dojo
+    Ninja.objects.create(first_name="lana", last_name="waleed", state="sa",dojo = Dojo.objects.get(id=3))
+    Ninja.objects.create(first_name="sara", last_name="waleed", state="sa",dojo = Dojo.objects.get(id=3))
+    Ninja.objects.create(first_name="nada", last_name="waleed", state="sa",dojo = Dojo.objects.get(id=3))
+
+7- Query: Retrieve all the ninjas from the first dojo
+    Ninja.objects.filter(dojo=Dojo.objects.first())
+
+8- Query: Retrieve all the ninjas from the last dojo
+    Ninja.objects.filter(dojo=Dojo.objects.last())
+
+9- Query: Retrieve the last ninja's dojo
+    Ninja.objects.last().dojo
+
+10- Query: Create a new dojo
+    Dojo.objects.create(name="Software dev",desc= "new dojo", city="US", state="us")

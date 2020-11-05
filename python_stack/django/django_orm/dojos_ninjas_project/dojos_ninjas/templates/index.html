@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Dojos & Ninjas</title>
+    <style>
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class=" mt-5 col-6">
+            <h2 class="text-center">Add a Dojo</h2>
+            <form action="/process" method='post' class="form-group">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="dojo">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Name</span>
+                    </div>
+                    <input type="text" class="form-control" name="name" autofocus required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">City</span>
+                    </div>
+                    <input type="text" class="form-control" name="city" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">State</span>
+                    </div>
+                    <input type="text" class="form-control" name="state" maxlength="2" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Description</span>
+                    </div>
+                    <textarea type="text" class="form-control" name="desc" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-dark btn-block">Add</button>
+            </form>
+        </div>
+        <div class=" mt-5 col-6">
+            <h2 class="text-center">Add a Ninja</h2>
+            <form action="/process" method='post' class="form-group">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="ninja">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">First Name</span>
+                    </div>
+                    <input type="text" class="form-control" name="first_name" autofocus required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Last Name</span>
+                    </div>
+                    <input type="text" class="form-control" name="last_name" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">State</span>
+                    </div>
+                    <input type="text" class="form-control" name="state" maxlength="2" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Dojo</span>
+                    </div>
+                    <select id="choices" name="dojo" class="form-control" required>
+                        <!-- <option selected disabled> -- select a dojo -- </option> -->
+                        {% for dojo in dojos %}
+                            <option value={{dojo.id}}>{{dojo.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-dark btn-block">Add</button>
+            </form>
+        </div>
+        </div>
+        
+
+        <hr class="my-4">
+
+        <div class="text-center mt-5">
+            <h2>All Dojos</h2>
+            {% for dojo in dojos %}
+                <p>Ninjas at the {{dojo.name}} Dojo - {{dojo.ninjas.count}} <a class="btn btn-outline-danger btn-sm" href="/delete/{{dojo.id}}">Delete</a></p> 
+                <ul class="pl-0">
+                    {% if dojo.ninjas.all %}
+                        {% for ninja in dojo.ninjas.all %}
+                            <li >{{ninja.first_name}} {{ninja.last_name}}</li>
+                        {% endfor %}
+                    {% else %}
+                        <li>No ninjas yet</li>
+                    {% endif %}
+                </ul>
+            {% endfor %}
+            
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
