@@ -25,7 +25,10 @@ def validParens(string):
 # Braces Valid
 # ----------------------------------------------------------------------------------------
 # Given a string, returns whether the sequence of various parentheses, braces and brackets within it are valid. For example, given the input string "w(a{t}s[o(n{c}o)m]e)h[e{r}e]!", return true. Given "d(i{a}l[t]o)n{e", return false. Given "a(1)s[O(n]0{t)0}k", return false.
+
+# still not working
 def validBraces(string):
+    # the last one counted most be the frist one to be closed
     opens = {
         "(": 0,
         "{":0,

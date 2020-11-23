@@ -14,7 +14,7 @@ rotateArr = (arr, shiftBy) => {
             // return to the beginning on the arr by subtract the length -> the value what in the original place
             arr[i + shiftBy - arr.length] = tmp[i] 
         }
-         else {
+        else {
             //  move to the right -> the value what in the original place
             arr[i + shiftBy] = tmp[i]
         }

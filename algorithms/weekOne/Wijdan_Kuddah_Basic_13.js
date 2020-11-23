@@ -110,7 +110,7 @@ swapStringForArrayNegativeVals = (arr) => {
 printOdds1To255 = () => {
     for(let i = 1 ; i <= 225; ++i){
         if(i % 2 ){
-           console.log(i)
+            console.log(i)
         }
     }
 }

@@ -109,6 +109,15 @@ dist
 # ignores any directory named "secrets"
 test/
 exam/
+projects/
 .vscode
 .DS_Store
 my_environments/
+
+# Django
+.vscode
+env/
+venv/
+__pycache__/
+.vscode/
+db.sqlite3
