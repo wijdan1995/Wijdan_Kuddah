@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Favorite Books</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'books:root'%}">CodingDojo Books</a>
+        <div class="my-2 my-lg-0 ml-auto">
+            <span class="mr-4 text-light d-none d-md-inline">Welcome {{user_first_name}} {{user_last_name}}!</span>
+            
+            <a href="{% url 'books:user_fav' %}">
+                <button class='btn btn-light btn-sm mr-4'>
+                    My favorites
+                </button>
+            </a>
+            
+            <a href="{% url 'login:logout'%}">
+                <button class='btn btn-secondary btn-sm float-right'>
+                    Log Out
+                </button>
+            </a>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-6">
+                {% if user_id == book.uploaded_by.id%}
+                    <form action="{% url 'books:update' book_id=book.id %}" method='post' class="form-group">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" name="title" value="{{book.title}}">
+                        </div>
+                        <p>Added by: {{book.uploaded_by.first_name}} {{book.uploaded_by.last_name}}</p>
+                        <p>Added on: {{book.created_at|date:'F j, Y @ P'}}</p>
+                        <p>Last updated on: {{book.updated_at|date:'F j, Y @ P'}}</p>
+                        <p>Description: </p>
+                        <div class="input-group mb-3">
+                            <textarea class="form-control" name="desc" cols="30" rows="5">{{book.desc}}</textarea>
+                        </div>
+                        {% if messages %}
+                        {% for message in messages %}
+                        {% if "books" in message.tags %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                        <button type="submit" class="btn btn-dark">Update</button> <button formmethod="POST" formaction="{% url 'books:delete' book_id=book.id %}" class="btn btn-danger">Delete</button>
+                    </form>
+                {% else %}
+                    <h4>{{book.title}}</h4>
+                    <p>Added by: {{book.uploaded_by.first_name}} {{book.uploaded_by.last_name}}</p>
+                    <p>Added on: {{book.created_at|date:'F j, Y @ P'}}</p>
+                    <p>Last updated on: {{book.updated_at|date:'F j, Y @ P'}}</p>
+                    <p>Description: {{book.desc}}</p>
+                {% endif %}
+            </div>
+            <div class="col-6">
+                <h4>Users Who Like This Book:</h4>
+                <ul>
+                    {% for user in book.users_who_like.all %}
+                    <li>{{user.first_name}} {{user.last_name}}</li>
+                    {% endfor %}
+                </ul>
+
+                {% if book not in user_liked_books %}
+                <form method="post" action="{% url 'books:like' book_id=book.id%}">
+                    {% csrf_token %}
+                    <input type="hidden" name="which_form" value="book_view">
+                    <button type="submit" class="btn btn-link">Add to Favorites</button>
+                </form>
+                {% else %}
+                <form method="post" action="{% url 'books:remove_like' book_id=book.id%}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link">Un-Favorite</button>
+                </form>
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

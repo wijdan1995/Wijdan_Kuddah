@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Favorite Books</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'books:root'%}">CodingDojo Books</a>
+        <div class="my-2 my-lg-0 ml-auto">
+            <span class="mr-4 text-light d-none d-md-inline">Welcome {{user_first_name}} {{user_last_name}}!</span>
+
+            <a href="{% url 'books:user_fav' %}">
+                <button class='btn btn-light btn-sm mr-4'>
+                    My favorites
+                </button>
+            </a>
+
+            <a href="{% url 'login:logout'%}">
+                <button class='btn btn-secondary btn-sm float-right'>
+                    Log Out
+                </button>
+            </a>
+        </div>
+    </nav>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-6">
+                <h2>Add a Favorites Book</h2>
+                <form action="{% url 'books:create' %}" method='post' class="form-group">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Title</span>
+                        </div>
+                        <input type="text" class="form-control" name="title" autofocus>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Description</span>
+                        </div>
+                        <textarea class="form-control" name="desc" cols="30" rows="5"></textarea>
+                    </div>
+                    {% if messages %}
+                    {% for message in messages %}
+                    {% if "books" in message.tags %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    <button type="submit" class="btn btn-dark btn-block">Add</button>
+                </form>
+            </div>
+            <div class="col-6">
+                <h2>All Books</h2>
+                {% for book in all_books reversed %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <a class="card-title" href="{% url 'books:view' book_id=book.id %}">
+                            <p>{{book.title}}</p>
+                        </a>
+                        <h6 class="card-subtitle mb-2 text-muted">(added by {{book.uploaded_by.first_name}}
+                            {{book.uploaded_by.last_name}})</h6>
+                        {% if book in user_liked_books %}
+                        <em>this is one of your favorites</em>
+                        {% else %}
+                        <form method="post" action="{% url 'books:like' book_id=book.id%}">
+                            {% csrf_token %}
+                            <input type="hidden" name="which_form" value="books">
+                            <button type="submit" class="card-link btn btn-link">Add to Favorites</button>
+                        </form>
+
+                        {% endif %}
+                    </div>
+                </div>
+
+
+
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
