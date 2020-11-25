@@ -3,11 +3,17 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import HookForm from './components/HookForm'
 import DisplayData from './components/DisplayData'
 function App() {
-  const [form, setForm] = useState({})
+  const [inputs, setInputs] = useState({
+    firstName:'', 
+    lastName:'', 
+    email:'', 
+    password:'', 
+    confirmPassword:''
+  })
   return (
-    <div class="container mt-5">
-      <HookForm setForm={setForm}/>
-      <DisplayData formData={form}/>
+    <div className="container mt-5">
+      <HookForm inputs={inputs} setInputs={setInputs}/>
+      <DisplayData formData={inputs}/>
     </div>
   );
 }
