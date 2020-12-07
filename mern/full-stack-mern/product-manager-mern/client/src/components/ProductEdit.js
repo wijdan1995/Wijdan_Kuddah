@@ -1,12 +1,18 @@
-import React, {useState} from 'react'
-import axios from 'axios'
-
-export default function AddProduct({setLoaded}) {
-    const [inputs, setInputs] = useState({
-        title:'', 
-        price:'', 
-        description:''
-    })
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+export default function ProductEdit({id}) {
+    const [product, setProduct] = useState({});
+    const [loaded, setLoaded] = useState(false);
+    const [inputs, setInputs] = useState({})
+    const [edited, setEdited] = useState(false);
+    useEffect(()=>{
+        axios.get(`http://localhost:8000/api/products/${id}`)
+            .then(res=>{
+                setProduct(res.data.product);
+                setLoaded(true);
+                setInputs(res.data.product)
+            })
+    },[])
     const onChangeHandler = (e) => {
         setInputs({
             ...inputs,
@@ -15,22 +21,26 @@ export default function AddProduct({setLoaded}) {
     }
     const onSubmitHandler = e => {
         e.preventDefault();
-        // console.log(inputs)
-        axios.post('http://localhost:8000/api/products/new', {
+
+        axios.put(`http://localhost:8000/api/products/update/${id}`, {
             ...inputs
         })
-            .then(res=>console.log(res))
+            .then(res=>console.log(res),
+            setLoaded(true), setProduct(inputs), setEdited(true))
             .catch(err=>console.log(err))
-        setInputs({
-            title:'', 
-            price:'', 
-            description:''
-        })
-        setLoaded(false)
+
     }
     return (
-        <div className="text-center">
-            <h1>Product Manager</h1>
+        loaded ?
+        <div  className="text-center">
+            {
+                edited && 
+                <div className="alert alert-success " role="alert">
+                    <strong>Edited successfully</strong>
+                </div>
+                
+            }
+            <h1>ِEdit {product.title}</h1>
             <form className="form-group" onSubmit={onSubmitHandler}>
                 <div className="input-group mb-3">
                     <div className="input-group-prepend">
@@ -50,8 +60,14 @@ export default function AddProduct({setLoaded}) {
                     </div>
                     <textarea className="form-control"  name="description" cols="30" rows="4" value={inputs.description} onChange={onChangeHandler}></textarea>
                 </div>
-                <button type="submit" className="btn btn-dark btn-block">Create</button>
+                <button type="submit" className="btn btn-dark btn-block">Edit</button>
             </form>
+        </div>
+        :
+        <div className="d-flex justify-content-center">
+            <div className="spinner-border" role="status">
+                <span className="sr-only">Loading...</span>
+            </div>
         </div>
     )
 }

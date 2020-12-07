@@ -5,8 +5,8 @@ class User {
         this.firstName = faker.name.firstName();
         this.lastName = faker.name.lastName();
         this.phoneNumber = faker.phone.phoneNumber();
-        this.email = faker.internet .email();
-        this.password = faker.internet .password();
+        this.email = faker.internet.email();
+        this.password = faker.internet.password();
     }
 }
 
