@@ -2,10 +2,10 @@ import React from 'react'
 import AddProduct from './AddProduct'
 import ProductsList from './ProductsList'
 
-export default function MainPage({products, setProducts, loaded, setLoaded}) {
+export default function MainPage({products, setProducts, loaded}) {
     return (
         <>
-            <AddProduct loaded={loaded} setLoaded={setLoaded}/>
+            <AddProduct products={products} setProducts={setProducts}/>
             { loaded ? <ProductsList products={products} setProducts={setProducts}/>
             :
             <div className="d-flex justify-content-center">

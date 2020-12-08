@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from '@reach/router';
+import ProductForm from './ProductForm';
+
 export default function ProductEdit({id}) {
     const [product, setProduct] = useState({});
     const [loaded, setLoaded] = useState(false);
@@ -12,13 +15,7 @@ export default function ProductEdit({id}) {
                 setLoaded(true);
                 setInputs(res.data.product)
             })
-    },[])
-    const onChangeHandler = (e) => {
-        setInputs({
-            ...inputs,
-            [e.target.name]: e.target.value
-        })
-    }
+    },[id])
     const onSubmitHandler = e => {
         e.preventDefault();
 
@@ -32,7 +29,7 @@ export default function ProductEdit({id}) {
     }
     return (
         loaded ?
-        <div  className="text-center">
+        <div  >
             {
                 edited && 
                 <div className="alert alert-success " role="alert">
@@ -40,28 +37,9 @@ export default function ProductEdit({id}) {
                 </div>
                 
             }
-            <h1>ِEdit {product.title}</h1>
-            <form className="form-group" onSubmit={onSubmitHandler}>
-                <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                        <span className="input-group-text">Title</span>
-                    </div>
-                    <input type="text" className="form-control" name="title" value={inputs.title} onChange={onChangeHandler} autoFocus />
-                </div>
-                <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                        <span className="input-group-text">Price</span>
-                    </div>
-                    <input type="number" className="form-control" name="price" value={inputs.price} onChange={onChangeHandler} />
-                </div>
-                <div className="input-group mb-3">
-                    <div className="input-group-prepend">
-                        <span className="input-group-text">Description</span>
-                    </div>
-                    <textarea className="form-control"  name="description" cols="30" rows="4" value={inputs.description} onChange={onChangeHandler}></textarea>
-                </div>
-                <button type="submit" className="btn btn-dark btn-block">Edit</button>
-            </form>
+            <h1 className="text-center">ِEdit {product.title}</h1>
+            { inputs && <ProductForm action="Edit" onSubmitHandler={onSubmitHandler} inputs={inputs} setInputs={setInputs}/>}
+            <Link to={`/${product._id}`}><button className="btn btn-sm btn-outline-dark mt-4">Back</button></Link>
         </div>
         :
         <div className="d-flex justify-content-center">
