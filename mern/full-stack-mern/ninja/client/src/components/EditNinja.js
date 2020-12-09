@@ -1,36 +1,38 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import AuthorsForm from './AuthorsForm'
-import { Link } from '@reach/router'
-export default function EditAuthor({ id , setLoaded}) {
-    const [author, setAuthor] = useState({});
+import NinjaForm from './NinjaForm'
+import { Link, navigate } from '@reach/router'
+export default function EditNinja({id, setLoaded}) {
+    const [ninja, setNinja] = useState({});
     const [inputs, setInputs] = useState({})
     const [edited, setEdited] = useState(false);
     const [errors, setErrors] = useState([]);
     useEffect(() => {
-        axios.get(`http://localhost:8000/api/authors/${id}`)
+        axios.get(`http://localhost:8000/api/ninjas/${id}`)
             .then(res => {
-                setAuthor(res.data.author);
-                setInputs(res.data.author)
+                setNinja(res.data.ninja);
+                setInputs(res.data.ninja)
             })
             .catch(err => {
                 const errorResponse = err.response.data.errors; // Get the errors from err.response.data
                 // Set Errors
-                setAuthor(null)
+                setNinja(null)
                 setErrors(errorResponse);
             })
     }, [id])
     const onSubmitHandler = e => {
         e.preventDefault();
 
-        axios.put(`http://localhost:8000/api/authors/update/${id}`, {
+        axios.put(`http://localhost:8000/api/ninjas/update/${id}`, {
             ...inputs
         })
             .then(res => {
                 setLoaded(false)
-                setAuthor(inputs)
+                setNinja(inputs)
                 setEdited(true)
                 setErrors({})
+                navigate(`/ninja/${ninja._id}`)
+
             })
             .catch(err => {
                 const errorResponse = err.response.data.errors; // Get the errors from err.response.data
@@ -48,10 +50,10 @@ export default function EditAuthor({ id , setLoaded}) {
                 </div>
                 
             }
-            {author ? 
-            <AuthorsForm action="Edit" onSubmitHandler={onSubmitHandler} inputs={inputs} setInputs={setInputs} errors={errors} />
+            {ninja ? 
+            <NinjaForm action="Edit" ninja={ninja} onSubmitHandler={onSubmitHandler} inputs={inputs} setInputs={setInputs} errors={errors} />
             : 
-            <p className="text-center">Author not found <Link to="/new">Create new Author</Link></p> }
+            <p className="text-center">Ninja not found <Link to="/new">Create new Ninja</Link></p> }
         </div>
     )
 }
